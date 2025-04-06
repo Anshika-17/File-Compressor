@@ -1,0 +1,399 @@
+--Lab 2 Query 1
+alter table department
+add constraint pk_d_name Primary key(d_name);
+
+--Lab 2 Query 2
+alter table doctor
+add constraint pk_doc_id Primary key(doc_id);
+alter table department
+add foreign key (d_name) references department(d_name);
+
+--Lab2 Query3
+alter table patient
+add constraint pk_room_no Primary key (room_no);
+alter table patient
+add foreign key (p_id) references patient(p_id);
+
+--Lab2 Query4
+alter table doc_reg
+add foreign key(doc_id) references doctor(doc_id);
+
+--Lab2 Query5
+alter table doc_on_call
+add foreign key(doc_id) references doctor(doc_id);
+
+--Lab2 Query6
+--alter table patient
+--add constraint pk_p_id primary key (p_id);
+alter table patient
+add foreign key (department) references department(d_name);
+alter table patient
+add foreign key (p_refdoc) references doctor(doc_id);
+
+-- Lab2 Query7
+alter table pat_checkup
+add foreign key (p_id) references patient(p_id)
+add foreign key (doc_id) references doctor(doc_id);
+
+-- Lab2 Query8
+alter table pat_admit
+add foreign key (p_id) references patient(p_id)
+add foreign key (doc_id) references doctor(doc_id);
+
+-- Lab2 Query9
+alter table pat_dischrg
+add foreign_key (p_id) references patient (p_id);
+
+-- Lab2 Query10
+alter table pat_reg
+add foreign key (p_id) references patient(p_id);
+
+-- Lab2 Query11
+alter table pat_opr
+add foreign key (p_id) references patient(p_id)
+add foreign key (doc_id) references doctor(doc_id);
+
+
+
+
+-- Lab3 Question1
+INSERT ALL
+into Department values ('Anaesthesia','Floor 1','Critical Care & Pain Management')
+into Department values ('Cardiac','Floor 2','Surgery')
+into Department values ('Diagnostics','Floor 3','Diagnosis')
+into Department values ('ENT','Floor 4','Medicine')
+into Department values ('General Surgery','Floor 5','Surgery')
+into Department values ('Neuro Sciences','Floor 6','Diagnosis with Surgery')
+into Department values ('Physiotherapy','Floor 7','Critical care & Pain Management')
+into Department values ('Psychiatry','Floor 8','Diagnosis')
+into Department values ('Orthopaedic','Floor 9','Critical Care & Pain Management')
+into Department values ('Pulmonary','Floor 10','Reserved')
+into Department values ('General','Floor 11','Reserved')
+SELECT * from DUAL
+INSERT ALL
+into Doctor values ('DR01','Anaesthesia')
+into Doctor values ('DR02','Anaesthesia')
+into Doctor values ('DC01','Anaesthesia')
+into Doctor values ('DC02','Anaesthesia')
+into Doctor values ('DR03','Cardiac')
+into Doctor values ('DR04','Cardiac')
+into Doctor values ('DC03','Cardiac')
+into Doctor values ('DC04','Cardiac')
+into Doctor values ('DR05','Diagnostics')
+into Doctor values ('DR06','Diagnostics')
+into Doctor values ('DC05','Diagnostics')
+into Doctor values ('DC06','Diagnostics')
+into Doctor values ('DR07','ENT')
+into Doctor values ('DR08','ENT')
+into Doctor values ('DC07','ENT')
+into Doctor values ('DC08','ENT')
+into Doctor values ('DR09','General Surgery')
+into Doctor values ('DR10','General Surgery')
+into Doctor values ('DC09','General Surgery')
+into Doctor values ('DC10','General Surgery')
+into Doctor values ('DR11','Neuro Sciences')
+into Doctor values ('DR12','Neuro Sciences')
+into Doctor values ('DC11','Neuro Sciences')
+into Doctor values ('DC12','Neuro Sciences')
+into Doctor values ('DR13','Physiotherapy')
+into Doctor values ('DR14','Physiotherapy')
+into Doctor values ('DC13','Physiotherapy')
+into Doctor values ('DC14','Physiotherapy')
+into Doctor values ('DR15','Psychiatry')
+into Doctor values ('DR16','Psychiatry')
+into Doctor values ('DC15','Psychiatry')
+into Doctor values ('DC16','Psychiatry')
+into Doctor values ('DR17','Orthopaedic')
+into Doctor values ('DR18','Orthopaedic')
+into Doctor values ('DC17','Orthopaedic')
+into Doctor values ('DC18','Orthopaedic')
+into Doctor values ('DR19','Pulmonary')
+into Doctor values ('DR20','Pulmonary')
+into Doctor values ('DC19','Pulmonary')
+into Doctor values ('DC20','Pulmonary')
+SELECT * from DUAL
+
+INSERT ALL
+into Patient values ('PT001','AAA',35,'M','Civil Lines','Kanpur',9080706051,'01-JUN-2016','Cardiac Problem','DR03','Cardiac')
+into Patient values ('PT002','AAB',40,'F','Kalyanpur','Kanpur',9080706052,'02-JUN-2016','Physio Problem','DR13','Physiotherapy')
+into Patient values ('PT003','AAC',45,'M','Parade','Kanpur',9080706053,'01-JUN-2016','ENT Problem','DC13','ENT')
+into Patient values ('PT004','AAD',50,'F','Rawatpur','Kanpur',9080706054,'02-JUN-2016','Diagnostics Problem','DR05','Diagnostics')
+into Patient values ('PT005','AAE',55,'M','Harjinder Nagar','Kanpur',9080706055,'03-JUN-2016','Neuro Problem','DR11','Neuro Sciences')
+into Patient values ('PT006','BAA',35,'M','Civil Lines','Lucknow',9080706061,'01-JUN-2016','Ortho Problem','DC17','Orthopaedic')
+into Patient values ('PT007','BAB',40,'F','Charbagh','Lucknow',9080706062,'02-JUN-2016','Surgery','DC09','General Surgery')
+into Patient values ('PT008','BAC',45,'M','Alambagh','Lucknow',9080706063,'01-JUN-2016','ENT Problem','DC13','ENT')
+into Patient values ('PT009','BAD',50,'F','Gomti Nagar','Lucknow',9080706064,'02-JUN-2016','Surgery','DR09','General Surgery')
+into Patient values ('PT010','BAE',55,'M','Hazrat Ganj','Lucknow',9080706065,'03-JUN-2016','Neuro Problem','DR11','Neuro Sciences')
+into Patient values ('PT011','CAA',35,'M','Civil Lines','New Delhi',9080706071,'01-JUN-2016','Ortho Problem','DC17','Orthopaedic')
+into Patient values ('PT012','CAB',40,'F','Charbagh','New Delhi',9080706072,'02-JUN-2016','Surgery','DC09','General Surgery')
+into Patient values ('PT013','CAC',45,'M','Alambagh','New Delhi',9080706073,'01-JUN-2016','ENT Problem','DC13','ENT')
+into Patient values ('PT014','DAD',50,'F','Gomti Nagar','New Delhi',9080706074,'02-JUN-2016','Surgery','DR09','General Surgery')
+into Patient values ('PT015','DAE',55,'M','Hazrat Ganj','New Delhi',9080706075,'03-JUN-2016','Neuro Problem','DR11','Neuro Sciences')
+
+
+
+SELECT * from DUAL
+INSERT ALL
+into Department values ('Anaesthesia','Floor 1','Critical Care & Pain Management')
+into Department values ('Cardiac','Floor 2','Surgery')
+into Department values ('Diagnostics','Floor 3','Diagnosis')
+into Department values ('ENT','Floor 4','Medicine')
+into Department values ('General Surgery','Floor 5','Surgery')
+into Department values ('Neuro Sciences','Floor 6','Diagnosis with Surgery')
+into Department values ('Physiotherapy','Floor 7','Critical care & Pain Management')
+into Department values ('Psychiatry','Floor 8','Diagnosis')
+into Department values ('Orthopaedic','Floor 9','Critical Care & Pain Management')
+into Department values ('Pulmonary','Floor 10','Medicine')
+SELECT * from DUAL
+
+INSERT ALL
+into Doctor values ('DR01','Anaesthesia')
+into Doctor values ('DR02','Anaesthesia')
+into Doctor values ('DC01','Anaesthesia')
+into Doctor values ('DC02','Anaesthesia')
+into Doctor values ('DR03','Cardiac')
+into Doctor values ('DR04','Cardiac')
+into Doctor values ('DC03','Cardiac')
+into Doctor values ('DC04','Cardiac')
+into Doctor values ('DR05','Diagnostics')
+into Doctor values ('DR06','Diagnostics')
+into Doctor values ('DC05','Diagnostics')
+into Doctor values ('DC06','Diagnostics')
+into Doctor values ('DR07','ENT')
+into Doctor values ('DR08','ENT')
+into Doctor values ('DC07','ENT')
+into Doctor values ('DC08','ENT')
+into Doctor values ('DR09','General Surgery')
+into Doctor values ('DR10','General Surgery')
+into Doctor values ('DC09','General Surgery')
+into Doctor values ('DC10','General Surgery')
+into Doctor values ('DR11','Neuro Sciences')
+into Doctor values ('DR12','Neuro Sciences')
+into Doctor values ('DC11','Neuro Sciences')
+into Doctor values ('DC12','Neuro Sciences')
+into Doctor values ('DR13','Physiotherapy')
+into Doctor values ('DR14','Physiotherapy')
+into Doctor values ('DC13','Physiotherapy')
+into Doctor values ('DC14','Physiotherapy')
+into Doctor values ('DR15','Psychiatry')
+into Doctor values ('DR16','Psychiatry')
+into Doctor values ('DC15','Psychiatry')
+into Doctor values ('DC16','Psychiatry')
+into Doctor values ('DR17','Orthopaedic')
+into Doctor values ('DR18','Orthopaedic')
+into Doctor values ('DC17','Orthopaedic')
+into Doctor values ('DC18','Orthopaedic')
+into Doctor values ('DR19','Pulmonary')
+into Doctor values ('DR20','Pulmonary')
+into Doctor values ('DC19','Pulmonary')
+into Doctor values ('DC20','Pulmonary')
+SELECT * from DUAL
+
+INSERT ALL
+into Patient values ('PT001','AAA',35,'M','Civil Lines','Kanpur',9080706051,'jun-01-2016','Cardiac Problem','DR03','Cardiac')
+select * from dual;
+into Patient values ('PT002','AAB',40,'F','Kalyanpur','Kanpur',9080706052,'02-JUN-2016','Physio Problem','DR13','Physiotherapy')
+into Patient values ('PT003','AAC',45,'M','Parade','Kanpur',9080706053,'01-JUN-2016','ENT Problem','DC13','ENT')
+into Patient values ('PT004','AAD',50,'F','Rawatpur','Kanpur',9080706054,'02-JUN-2016','Diagnostics Problem','DR05','Diagnostics')
+into Patient values ('PT005','AAE',55,'M','Harjinder Nagar','Kanpur',9080706055,'03-JUN-2016','Neuro Problem','DR11','Neuro Sciences')
+into Patient values ('PT006','BAA',35,'M','Civil Lines','Lucknow',9080706061,'01-JUN-2016','Ortho Problem','DC17','Orthopaedic')
+into Patient values ('PT007','BAB',40,'F','Charbagh','Lucknow',9080706062,'02-JUN-2016','Surgery','DC09','General Surgery')
+into Patient values ('PT008','BAC',45,'M','Alambagh','Lucknow',9080706063,'01-JUN-2016','ENT Problem','DC13','ENT')
+into Patient values ('PT009','BAD',50,'F','Gomti Nagar','Lucknow',9080706064,'02-JUN-2016','Surgery','DR09','General Surgery')
+into Patient values ('PT010','BAE',55,'M','Hazrat Ganj','Lucknow',9080706065,'03-JUN-2016','Neuro Problem','DR11','Neuro Sciences')
+into Patient values ('PT011','CAA',35,'M','Karol Bagh','New Delhi',9080706071,'01-JUN-2016','Pulmonary Problem','DR19','Pulmonary')
+into Patient values ('PT012','CAB',40,'F','GTB Nagar','New Delhi',9080706072,'02-JUN-2016','Surgery','DC09','General Surgery')
+into Patient values ('PT013','CAC',45,'M','Azad Nagar','New Delhi',9080706073,'01-JUN-2016','ENT Problem','DC13','ENT')
+into Patient values ('PT014','CAD',50,'F','Nehru Palace','New Delhi',9080706074,'02-JUN-2016','Surgery','DR09','General Surgery')
+into Patient values ('PT015','CAE',55,'M','Sarojini Nagar','New Delhi',9080706075,'03-JUN-2016','Neuro Problem','DR11','Neuro Sciences')
+into Patient values ('PT016','DAA',35,'M','Civil Lines','Allahabad',9080706081,'01-JUN-2016','Pulmonary Problem','DR19','Pulmonary')
+into Patient values ('PT017','DAB',40,'F','MG Road','Allahabad',9080706082,'02-JUN-2016','Surgery','DR09','General Surgery')
+into Patient values ('PT018','DAC',45,'M','Arya Nagar','Allahabad',9080706083,'02-JUN-2016','Ortho Problem','DR18','Orthopaedic')
+into Patient values ('PT019','DAD',50,'F','Azad Nagar','Allahabad',9080706084,'03-JUN-2016','Surgery','DR10','General Surgery')
+into Patient values ('PT020','DAE',55,'M','Cantonment','Allahabad',9080706085,'03-JUN-2016','Neuro Problem','DC12','Neuro Sciences')
+SELECT * from DUAL
+
+INSERT ALL
+into ROOM_DETAILS values (101,'P AC','N','PT001',5000)
+into ROOM_DETAILS values (102,'P AC','N','PT003',5000)
+into ROOM_DETAILS values (103,'P AC','N','PT010',5000)
+into ROOM_DETAILS values (104,'P AC','N','PT019',5000)
+into ROOM_DETAILS values (105,'P AC','N','PT020',5000)
+into ROOM_DETAILS values (201,'P NON-AC','N','PT007',3000)
+into ROOM_DETAILS values (202,'P NON-AC','N','PT005',3000)
+into ROOM_DETAILS values (203,'P NON-AC','Y','',3000)
+into ROOM_DETAILS values (204,'P NON-AC','Y','',3000)
+into ROOM_DETAILS values (205,'P NON-AC','Y','',3000)
+into ROOM_DETAILS values (301,'G AC','N','PT009',3000)
+into ROOM_DETAILS values (302,'G AC','N','PT012',3000)
+into ROOM_DETAILS values (303,'G AC','N','PT014',3000)
+into ROOM_DETAILS values (304,'G AC','Y','',3000)
+into ROOM_DETAILS values (305,'G AC','Y','',3000)
+into ROOM_DETAILS values (401,'G NON-AC','Y','PT011',2000)
+into ROOM_DETAILS values (402,'G NON-AC','Y','PT017',2000)
+into ROOM_DETAILS values (403,'G NON-AC','Y','',2000)
+into ROOM_DETAILS values (404,'G NON-AC','Y','',2000)
+into ROOM_DETAILS values (405,'G NON-AC','Y','',2000)
+SELECT * from DUAL
+
+INSERT ALL
+into DOC_REG values ('DR01','Dr. A','MD',80000,8090607011,'01-Jan-2004')
+into DOC_REG values ('DR02','Dr. B','MD',60000,8090607012,'01-Mar-2007')
+into DOC_REG values ('DR03','Dr. C','MBBS',100000,8090607013,'01-May-2008')
+into DOC_REG values ('DR04','Dr. D','MBBS',120000,8090607014,'01-Jul-2010')
+into DOC_REG values ('DR05','Dr. E','MD',50000,8090607015,'01-Sep-2006')
+into DOC_REG values ('DR06','Dr. F','MD',60000,8090607016,'01-Nov-2012')
+into DOC_REG values ('DR07','Dr. G','MBBS',80000,8090607017,'01-Feb-2010')
+into DOC_REG values ('DR08','Dr. H','MBBS',90000,8090607018,'01-Apr-2013')
+into DOC_REG values ('DR09','Dr. I','MBBS',120000,8090607019,'01-Jun-2010')
+into DOC_REG values ('DR10','Dr. J','MBBS',150000,8090607020,'01-Aug-2015')
+into DOC_REG values ('DR11','Dr. K','MBBS',140000,8090607031,'01-Oct-2012')
+into DOC_REG values ('DR12','Dr. L','MD',120000,8090607032,'01-Dec-2010')
+into DOC_REG values ('DR13','Dr. M','MBBS',80000,8090607033,'01-Nov-2011')
+into DOC_REG values ('DR14','Dr. N','MD',60000,8090607034,'01-Aug-2014')
+into DOC_REG values ('DR15','Dr. O','MD',60000,8090607035,'01-Apr-2015')
+into DOC_REG values ('DR16','Dr. P','MD',60000,8090607036,'01-Jan-2010')
+into DOC_REG values ('DR17','Dr. Q','MBBS',90000,8090607037,'01-Mar-2007')
+into DOC_REG values ('DR18','Dr. R','MD',70000,8090607038,'01-Jun-2009')
+into DOC_REG values ('DR19','Dr. S','MD',650000,8090607039,'01-Sep-2010')
+into DOC_REG values ('DR20','Dr. T','MD',70000,8090607040,'01-Dec-2012')
+SELECT * from DUAL
+
+
+INSERT ALL
+into DOC_ON_CALL values ('DC01','Dr. AT','MD',800,8090607051)
+into DOC_ON_CALL values ('DC02','Dr. BS','MD',600,8090607052)
+into DOC_ON_CALL values ('DC03','Dr. CR','MBBS',1000,8090607053)
+into DOC_ON_CALL values ('DC04','Dr. DQ','MBBS',1200,8090607054)
+into DOC_ON_CALL values ('DC05','Dr. EP','MD',500,8090607055)
+into DOC_ON_CALL values ('DC06','Dr. FO','MD',600,8090607056)
+into DOC_ON_CALL values ('DC07','Dr. GN','MBBS',800,8090607057)
+into DOC_ON_CALL values ('DC08','Dr. HM','MBBS',900,8090607058)
+into DOC_ON_CALL values ('DC09','Dr. IL','MBBS',1200,8090607059)
+into DOC_ON_CALL values ('DC10','Dr. JK','MBBS',1500,8090607060)
+into DOC_ON_CALL values ('DC11','Dr. KJ','MBBS',1400,8090607081)
+into DOC_ON_CALL values ('DC12','Dr. LI','MD',1200,8090607082)
+into DOC_ON_CALL values ('DC13','Dr. MH','MBBS',800,8090607083)
+into DOC_ON_CALL values ('DC14','Dr. NG','MD',600,8090607084)
+into DOC_ON_CALL values ('DC15','Dr. OF','MD',600,8090607085)
+into DOC_ON_CALL values ('DC16','Dr. PE','MD',600,8090607086)
+into DOC_ON_CALL values ('DC17','Dr. QD','MBBS',900,8090607087)
+into DOC_ON_CALL values ('DC18','Dr. RC','MD',700,8090607088)
+into DOC_ON_CALL values ('DC19','Dr. SB','MD',500,8090607089)
+into DOC_ON_CALL values ('DC20','Dr. TA','MD',600,8090607090)
+SELECT * from DUAL
+
+INSERT ALL
+into Pat_checkup values ('PT001','DR03','Cardiac Problem','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT002','DR13','Physio Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT003','DC13','ENT Problem','Admitted','Adviced Treatment')
+into Pat_checkup values ('PT004','DR05','Diagnostics Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT005','DR11','Neuro Problem','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT006','DC17','Ortho Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT007','DC09','Surgery','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT008','DC13','ENT Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT009','DR09','Surgery','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT010','DR11','Neuro Problem','Admitted','Adviced Treatment')
+into Pat_checkup values ('PT011','DR19','Pulmonary Problem','Admitted','Adviced Treatment')
+into Pat_checkup values ('PT012','DC09','Surgery','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT013','DC13','ENT Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT014','DR09','Surgery','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT015','DR11','Neuro Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT016','DR19','Pulmonary Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT017','DR09','Surgery','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT018','DR18','Ortho Problem','RegularPatient','Regular Treatment')
+into Pat_checkup values ('PT019','DR10','Surgery','Referred for Operation','Preliminary')
+into Pat_checkup values ('PT020','DC12','Neuro Problem','Admitted','Adviced Treatment')
+SELECT * from DUAL
+
+INSERT ALL
+into Pat_Admit values ('PT001','DR03','Cardiac Problem','Referred for Operation','Preliminary','31-May-2016',101)
+into Pat_Admit values ('PT003','DC13','ENT Problem','Admitted','Adviced Treatment','29-May-2016',102)
+into Pat_Admit values ('PT005','DR11','Neuro Problem','Referred for Operation','Preliminary','30-May-2016',202)
+into Pat_Admit values ('PT007','DC09','Surgery','Referred for Operation','Preliminary','30-May-2016',201)
+into Pat_Admit values ('PT009','DR09','Surgery','Referred for Operation','Preliminary','29-May-2016',301)
+into Pat_Admit values ('PT010','DR11','Neuro Problem','Admitted','Adviced Treatment','03-Jun-2016',103)
+into Pat_Admit values ('PT011','DR19','Pulmonary Problem','Admitted','Adviced Treatment','30-May-2016',401)
+into Pat_Admit values ('PT012','DC09','Surgery','Referred for Operation','Preliminary','31-May-2016',302)
+into Pat_Admit values ('PT014','DR09','Surgery','Referred for Operation','Preliminary','30-May-2016',303)
+into Pat_Admit values ('PT017','DR09','Surgery','Referred for Operation','Preliminary','31-May-2016',402)
+into Pat_Admit values ('PT019','DR10','Surgery','Referred for Operation','Preliminary','31-May-2016',104)
+into Pat_Admit values ('PT020','DC12','Neuro Problem','Admitted','Adviced Treatment','30-May-2016',105)
+SELECT * from DUAL
+
+INSERT ALL
+into Pat_Reg values ('PT001','21-Feb-2016','Cardiac Problem','Preliminary','Regular')
+into Pat_Reg values ('PT002','31-Mar-2016','Physio Problem','RegularTreatment','Basic')
+into Pat_Reg values ('PT003','12-Feb-2016','ENT Problem','AdvicedTreatment','Basic')
+into Pat_Reg values ('PT004','05-Apr-2016','Diagnostics Problem','RegularTreatment','Basic')
+into Pat_Reg values ('PT005','11-May-2016','Neuro Problem','Preliminary','Regular')
+into Pat_Reg values ('PT006','17-May-2016','Ortho Problem','RegularTreatment','Regular')
+into Pat_Reg values ('PT007','30-May-2016','Surgery','Preliminary','Cured')
+into Pat_Reg values ('PT008','13-Mar-2016','ENT Problem','RegularTreatment','Regular')
+into Pat_Reg values ('PT009','19-May-2016','Surgery','Preliminary','Cured')
+into Pat_Reg values ('PT010','11-May-2016','Neuro Problem','AdvicedTreatment','Regular')
+into Pat_Reg values ('PT011','19-Feb-2016','Pulmonary Problem','AdvicedTreatment','Basic')
+into Pat_Reg values ('PT012','30-May-2016','Surgery','Preliminary','Cured')
+into Pat_Reg values ('PT013','13-Apr-2016','ENT Problem','RegularTreatment','Basic')
+into Pat_Reg values ('PT014','27-May-2016','Surgery','Preliminary','Cured')
+into Pat_Reg values ('PT015','11-Mar-2016','Neuro Problem','RegularTreatment','Regular')
+into Pat_Reg values ('PT016','19-Apr-2016','Pulmonary Problem','RegularTreatment','Basic')
+into Pat_Reg values ('PT017','29-May-2016','Surgery','Preliminary','Cured')
+into Pat_Reg values ('PT018','18-May-2016','Ortho Problem','RegularTreatment','Regular')
+into Pat_Reg values ('PT019','31-May-2016','Surgery','Preliminary','Cured')
+into Pat_Reg values ('PT020','02-Jun-2016','Neuro Problem','AdvicedTreatment','Regular')
+SELECT * from DUAL
+
+INSERT ALL
+into Pat_Oprtn values ('PT001','DR03','31-May-16','01-Jun-2016','Major','OT 1')
+into Pat_Oprtn values ('PT005','DR11','30-May-16','01-Jun-2016','Major','OT 2')
+into Pat_Oprtn values ('PT007','DC09','30-May-16','02-Jun-2016','Minor','OT 1')
+into Pat_Oprtn values ('PT009','DR09','29-May-16','31-May-2016','Minor','OT 2')
+into Pat_Oprtn values ('PT012','DC09','31-May-16','02-Jun-2016','Minor','OT 1')
+into Pat_Oprtn values ('PT014','DR09','30-May-16','03-Jun-2016','Major','OT 2')
+into Pat_Oprtn values ('PT017','DR09','31-May-16','03-Jun-2016','Minor','OT 1')
+into Pat_Oprtn values ('PT019','DR10','31-May-16','31-May-2016','Major','OT 2')
+SELECT * from DUAL
+
+INSERT ALL
+into Pat_Dischrg values ('PT001','DR03','Cardiac Problem','Regular',154165,'06-Jun-16')
+into Pat_Dischrg values ('PT003','DC13','ENT Problem','Short Term',52304,'04-Jun-16')
+into Pat_Dischrg values ('PT005','DR11','Neuro Problem','Long Term',184234,'05-Jun-16')
+into Pat_Dischrg values ('PT007','DC09','Surgery','Short Term',41652,'05-Jun-16')
+into Pat_Dischrg values ('PT009','DR09','Surgery','Regular',35485,'03-Jun-16')
+into Pat_Dischrg values ('PT010','DR11','Neuro Problem','Regular',166168,'07-Jun-16')
+into Pat_Dischrg values ('PT011','DR19','Pulmonary Problem','Long Term',55262,'03-Jun-16')
+into Pat_Dischrg values ('PT012','DC09','Surgery','Short Term',54316,'04-Jun-16')
+into Pat_Dischrg values ('PT014','DR09','Surgery','Long Term',124285,'08-Jun-16')
+into Pat_Dischrg values ('PT017','DR09','Surgery','Short Term',34165,'06-Jun-16')
+into Pat_Dischrg values ('PT019','DR10','Surgery','Long term',24165,'02-Jun-16')
+into Pat_Dischrg values ('PT020','DC12','Neuro Problem','Regular',124784,'04-Jun-16')
+SELECT * from DUAL
+CREATE TABLE Department (
+D_NAME varchar2(50), 
+D_LOCATION varchar2(20), 
+FACILITIES varchar2(50),
+)
+
+
+
+
+
+
+
+
+desc department;
+desc doctor;
+desc doc_on_call;
+desc doc_reg;
+desc patient;
+desc pat_admit;
+desc pat_checkup;
+desc pat_dischrg;
+desc pat_opr;
+desc pat_reg;
+desc room_details; 
+
+
+
+
