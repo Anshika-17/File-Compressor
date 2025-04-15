@@ -19,8 +19,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 2rem;
+  position: relative;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
 }
 
@@ -174,10 +175,31 @@
 }
 
 .App-footer {
-  background-color: #333;
-  color: white;
-  padding: 1rem;
+  width: 100%;
+  padding: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
+  text-align: center;
+  margin-top: auto;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.App-footer p {
+  margin: 0;
+  padding: 0;
+}
+
+.App-footer a {
+  color: #4CAF50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.App-footer a:hover {
+  color: #45a049;
+  text-decoration: underline;
 }
 
 @keyframes App-logo-spin {

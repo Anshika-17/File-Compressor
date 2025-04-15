@@ -341,7 +341,8 @@ function App() {
       </main>
       
       <footer className="App-footer">
-        <p>&copy; {new Date().getFullYear()} File Compressor. All rights reserved.</p>
+        <p>© 2025 File Compressor. All Rights Reserved.</p>
+        <p>Created with ❤️ by <a href="https://github.com/Anshika-17" target="_blank" rel="noopener noreferrer">Anshika</a></p>
       </footer>
     </div>
   );
