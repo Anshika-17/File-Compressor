@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/File-Compressor/static/css/main.81f9cd26.css",
+    "main.js": "/File-Compressor/static/js/main.e26234ae.js",
+    "static/js/453.8ab44547.chunk.js": "/File-Compressor/static/js/453.8ab44547.chunk.js",
+    "index.html": "/File-Compressor/index.html",
+    "main.81f9cd26.css.map": "/File-Compressor/static/css/main.81f9cd26.css.map",
+    "main.e26234ae.js.map": "/File-Compressor/static/js/main.e26234ae.js.map",
+    "453.8ab44547.chunk.js.map": "/File-Compressor/static/js/453.8ab44547.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.81f9cd26.css",
+    "static/js/main.e26234ae.js"
+  ]
+}
