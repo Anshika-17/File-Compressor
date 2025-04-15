@@ -42,7 +42,7 @@ def is_already_compressed(filename: str) -> bool:
     return False
 
 # Function to compress an image file
-def compress_image(input_path, output_path, quality=65):
+def compress_image(input_path, output_path, quality=40):
     """Compress an image file using PIL/Pillow"""
     try:
         img = Image.open(input_path)
@@ -51,8 +51,8 @@ def compress_image(input_path, output_path, quality=65):
         if img.mode == 'RGBA':
             img = img.convert('RGB')
             
-        # Save with reduced quality
-        img.save(output_path, optimize=True, quality=quality)
+        # Save with reduced quality and additional optimization
+        img.save(output_path, optimize=True, quality=quality, progressive=True)
         return True
     except Exception as e:
         print(f"Image compression error: {str(e)}")
@@ -327,8 +327,11 @@ async def decompress_file(file: UploadFile = File(...)):
 
 @app.get("/api/health")
 async def health_check():
-    """Simple endpoint to check if the API is running."""
     return {"status": "ok", "message": "API is running"}
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the File Compression API. Use /api/compress or /api/decompress endpoints."}
 
 if __name__ == "__main__":
     import uvicorn

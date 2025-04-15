@@ -4,10 +4,12 @@ import FileUploader from './components/FileUploader';
 import CompressionResult from './components/CompressionResult';
 import DecompressionOption from './components/DecompressionOption';
 import DecompressionResult from './components/DecompressionResult';
+import Welcome from './components/Welcome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompress, faExpand, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
   const [mode, setMode] = useState('choose'); // 'choose', 'compress', 'decompress'
   const [file, setFile] = useState(null);
   const [fileInfo, setFileInfo] = useState(null);
@@ -55,6 +57,10 @@ function App() {
     
     checkApiStatus();
   }, []);
+
+  const handleStart = () => {
+    setShowWelcome(false);
+  };
 
   const resetState = () => {
     setFile(null);
@@ -203,6 +209,10 @@ function App() {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
+
+  if (showWelcome) {
+    return <Welcome onStart={handleStart} />;
+  }
 
   return (
     <div className="App">
