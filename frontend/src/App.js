@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ThemeProvider, ThemeContext } from './context/ThemeContext';
 import './App.css';
 import FileUploader from './components/FileUploader';
 import CompressionResult from './components/CompressionResult';
 import DecompressionOption from './components/DecompressionOption';
 import DecompressionResult from './components/DecompressionResult';
 import Welcome from './components/Welcome';
+import ThemeToggle from './components/ThemeToggle';
+import ProgressBar from './components/ProgressBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompress, faExpand, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function App() {
+function AppContent() {
+  const { isDarkMode } = useContext(ThemeContext);
   const [showWelcome, setShowWelcome] = useState(true);
   const [mode, setMode] = useState('choose'); // 'choose', 'compress', 'decompress'
   const [file, setFile] = useState(null);
@@ -18,13 +22,15 @@ function App() {
   const [decompressionResult, setDecompressionResult] = useState(null);
   const [error, setError] = useState(null);
   const [apiStatus, setApiStatus] = useState({ checked: false, ok: false, message: 'Checking API status...' });
+  const [progress, setProgress] = useState(0);
+  const [progressStatus, setProgressStatus] = useState('');
 
   // Check API status when component mounts
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
         console.log('Checking API health...');
-        const response = await fetch('http://localhost:3001/api/health')
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/health`)
           .catch(error => {
             console.error('API health check failed:', error);
             throw new Error(`API unreachable: ${error.message}`);
@@ -94,58 +100,57 @@ function App() {
 
     setLoading(true);
     setError(null);
+    setProgress(0);
+    setProgressStatus('Starting compression...');
     
     try {
       const formData = new FormData();
       formData.append('file', file);
       
-      console.log('Sending compression request to backend...');
+      setProgressStatus('Uploading file...');
+      setProgress(20);
       
-      // Using the FastAPI endpoint
-      const response = await fetch('http://localhost:3001/api/compress', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/compress`, {
         method: 'POST',
         body: formData,
-      }).catch(error => {
-        console.error('Network error during fetch:', error);
-        throw new Error(`Network error: ${error.message}. Make sure the backend server is running at http://localhost:3001`);
       });
-      
-      console.log('Response received:', response.status, response.statusText);
+
+      setProgressStatus('Compressing file...');
+      setProgress(60);
       
       if (!response.ok) {
-        try {
-          const errorData = await response.json();
-          throw new Error(errorData.detail || `Server error: ${response.status} ${response.statusText}`);
-        } catch (jsonError) {
-          throw new Error(`Server error: ${response.status} ${response.statusText}`);
-        }
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
       }
       
-      try {
-        const data = await response.json();
-        
-        if (data.success) {
-          setCompressionResult({
-            originalSize: formatFileSize(data.originalSize),
-            compressedSize: formatFileSize(data.compressedSize),
-            compressionRatio: `${data.compressionRatio}%`,
-            downloadData: data.compressedData,
-            fileName: data.fileName,
-            fileExtension: data.fileExtension,
-            compressionMethod: data.compressionMethod || 'huffman'
-          });
-        } else {
-          throw new Error(data.detail || 'Unknown error occurred');
-        }
-      } catch (jsonError) {
-        console.error('Error parsing JSON response:', jsonError);
-        throw new Error(`Error processing response: ${jsonError.message}`);
+      const data = await response.json();
+      
+      setProgressStatus('Finalizing...');
+      setProgress(90);
+      
+      if (data.success) {
+        setCompressionResult({
+          originalSize: formatFileSize(data.originalSize),
+          compressedSize: formatFileSize(data.compressedSize),
+          compressionRatio: `${data.compressionRatio}%`,
+          downloadData: data.compressedData,
+          fileName: data.fileName,
+          fileExtension: data.fileExtension,
+          compressionMethod: data.compressionMethod || 'huffman'
+        });
+        setProgressStatus('Compression complete!');
+        setProgress(100);
+      } else {
+        throw new Error(data.detail || 'Unknown error occurred');
       }
     } catch (err) {
-      console.error('Compression error:', err);
       setError(err.message);
+      setProgressStatus('Error occurred');
     } finally {
       setLoading(false);
+      setTimeout(() => {
+        setProgress(0);
+        setProgressStatus('');
+      }, 2000);
     }
   };
 
@@ -215,7 +220,8 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={`App ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+      <ThemeToggle />
       <header className="App-header">
         <h1>File Compressor</h1>
         <p>Compress and decompress files efficiently</p>
@@ -225,6 +231,10 @@ function App() {
       </header>
       
       <main className="App-main">
+        {loading && (
+          <ProgressBar progress={progress} status={progressStatus} />
+        )}
+        
         {!apiStatus.ok && apiStatus.checked && (
           <div className="api-error-container">
             <h2>Cannot Connect to API Server</h2>
@@ -341,10 +351,18 @@ function App() {
       </main>
       
       <footer className="App-footer">
-        <p>© 2025 File Compressor. All Rights Reserved.</p>
+        <p>© 2024 File Compressor. All Rights Reserved.</p>
         <p>Created with ❤️ by <a href="https://github.com/Anshika-17" target="_blank" rel="noopener noreferrer">Anshika</a></p>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
