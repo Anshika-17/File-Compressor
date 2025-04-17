@@ -6,17 +6,24 @@ import subprocess
 import os
 import shutil
 import base64
-from typing import Optional
+from typing import Optional, Dict, Any
 import uuid
 import io
 from PIL import Image  # Add Pillow for image compression
 
 app = FastAPI(title="File Compression API", description="API for compressing and decompressing files using Huffman coding")
 
-# Enable CORS
+# Enable CORS with specific origins
+origins = [
+    "http://localhost:3000",  # Local development
+    "https://file-compressor-2tanglgxi-anshika-17s-projects.vercel.app/",  # Your Vercel frontend
+    "https://*.vercel.app",  # All Vercel deployments
+    "https://*.railway.app",  # All Railway deployments
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for troubleshooting
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -326,8 +333,8 @@ async def decompress_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/health")
-async def health_check():
-    return {"status": "ok", "message": "API is running"}
+async def health_check() -> Dict[str, Any]:
+    return {"status": "API is connected and ready"}
 
 @app.get("/")
 async def root():

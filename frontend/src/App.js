@@ -25,43 +25,25 @@ function AppContent() {
   const [progress, setProgress] = useState(0);
   const [progressStatus, setProgressStatus] = useState('');
 
-  // Check API status when component mounts
+  // Check API health
   useEffect(() => {
-    const checkApiStatus = async () => {
+    const checkApiHealth = async () => {
       try {
-        console.log('Checking API health...');
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/health`)
-          .catch(error => {
-            console.error('API health check failed:', error);
-            throw new Error(`API unreachable: ${error.message}`);
-          });
-          
-        if (response.ok) {
-          const data = await response.json();
-          console.log('API health check successful:', data);
-          setApiStatus({
-            checked: true,
-            ok: true,
-            message: 'API is connected and ready'
-          });
-        } else {
-          setApiStatus({
-            checked: true,
-            ok: false,
-            message: `API error: ${response.status} ${response.statusText}`
-          });
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/health`);
+        if (!response.ok) {
+          throw new Error(`API returned ${response.status}: ${response.statusText}`);
         }
+        const data = await response.json();
+        setApiStatus(data.status);
       } catch (error) {
-        console.error('API check error:', error);
-        setApiStatus({
-          checked: true,
-          ok: false,
-          message: error.message || 'Failed to connect to the API'
-        });
+        console.error('API Health Check Error:', error);
+        setApiStatus('API connection error');
+        // Log the actual API URL being used
+        console.log('API URL:', process.env.REACT_APP_API_URL);
       }
     };
-    
-    checkApiStatus();
+
+    checkApiHealth();
   }, []);
 
   const handleStart = () => {
